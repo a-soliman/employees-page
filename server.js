@@ -64,6 +64,30 @@ app.get('/employee', ( req, res ) => {
 			})
 });
 
+app.get('/employee/:id', ( req, res ) => {
+	let _id = req.params.id;
+
+	Employee.find({ _id })
+		.then(
+			(employee) => {
+				if ( !employee.length ) {
+					return res.status(404).send({ success: false, msg: 'Unable to fetch employee with the provided ID'});
+				}
+
+				res.status(200).send({ success: true, employee });
+
+			}, 
+			( err ) => {
+				res.status(400).send({ success: false, msg: 'Unable to fetch employee'});
+			}
+		)
+		.catch(
+			( err ) => {
+				res.status(500).send({ success: false, msg: 'An Error has occured.' })
+			}
+		)
+});
+
 
 
 app.listen(port, () => {
