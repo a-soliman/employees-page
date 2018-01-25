@@ -48,6 +48,22 @@ app.use(expressValidator({
 	}
 }));
 
+app.get('/employee', ( req, res ) => {
+	Employee.find({})
+		.then(
+			(employees) => {
+				res.status(200).send({ success: true, employees });
+			}, 
+			( err ) => {
+				res.status(400).send({ success: false, msg: 'Unable to fetch employees'});
+			}
+		)
+		.catch(
+			( err ) => {
+				res.status(500).send({ success: false, msg: 'An Error has occured.' });
+			})
+});
+
 
 
 app.listen(port, () => {
