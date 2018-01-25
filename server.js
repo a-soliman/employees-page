@@ -110,7 +110,7 @@ app.post('/employee/add', ( req, res ) => {
 	const newEmployee = new Employee({ name, position, about, linkedInAcc });
 
 	newEmployee.save().then((employee) => {
-		res.status(200).send({ success: true, employee });
+		res.status(200).send({ success: true, msg: 'Added new Employee.' ,employee });
 		console.log(employee);
 	});
 });
@@ -129,7 +129,7 @@ app.delete('/employee/:id', ( req, res ) => {
 					return res.status(404).send({ success: false, msg: 'Unable to find employee with the provided ID.'});
 				}
 
-				res.status(200).send({ success: true, employee });
+				res.status(200).send({ success: true, msg: 'Removed Employee.' ,employee });
 			},
 			( err ) => {
 				res.status(404).send({ success: false, msg: 'Unable to find employee with the provided ID.'});
@@ -142,6 +142,62 @@ app.delete('/employee/:id', ( req, res ) => {
 		)
 
 });
+
+app.patch('/employee/:id', ( req, res ) => {
+	let _id = req.params.id;
+
+	if ( !ObjectID.isValid(_id) ) {
+		return res.status(404).send({ success: false, msg: 'Invalid ID.'});
+	}
+
+	let name 		= req.body.name;
+	let position 	= req.body.position;
+	let about 		= req.body.about;
+	let linkedInAcc = req.body.linkedInAcc;
+
+
+	req.checkBody('name', 'name field is required.').trim().notEmpty();
+	req.checkBody('position', 'position field is required').trim().notEmpty();
+	req.checkBody('about', 'about field is required').trim().notEmpty();
+
+	let errors = req.validationErrors();
+
+	if ( errors ) {
+		return res.status(400).send({ errors });
+	}
+
+
+	Employee.findOne({_id})
+		.then(
+			( employee ) => {
+				if ( !employee ) {
+					return res.status(404).send({ success: false, msg: 'Unable to find employee with the provided ID.'});
+				}
+
+				employee.name 		= name;
+				employee.position 	= position;
+				employee.about 		= about;
+				employee.linkedInAcc = req.body.linkedInAcc;
+				/* figure the updated image here */
+
+				employee.save(( err, updatedEmployee ) => {
+					if ( err ) {
+						console.log(err);
+						return res.status(500).send({ success: false, msg: 'An Error has occured.' });
+					}
+					res.status(200).send({ success: true, msg: 'Updated Employee Information.', employee });
+				})
+			},
+			( err ) => {
+				res.status(404).send({ success: false, msg: 'Unable to find employee with the provided ID.'});
+			}
+		)
+		.catch(
+			( err ) => {
+				res.status(500).send({ success: false, msg: 'An Error has occured.' });
+			}
+		)
+})
 
 app.listen(port, () => {
 	console.log('Server is runung on port ' + port);
