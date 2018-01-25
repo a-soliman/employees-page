@@ -88,7 +88,31 @@ app.get('/employee/:id', ( req, res ) => {
 		)
 });
 
+app.post('/employee/add', ( req, res ) => {
+	let name 		= req.body.name.trim();
+	let position 	= req.body.position.trim();
+	let about		= req.body.about.trim();
+	let linkedInAcc	= req.body.linkedInAcc.trim();
 
+	// validation
+	req.checkBody('name', 'name field is required.').trim().notEmpty();
+	req.checkBody('position', 'position field is required').trim().notEmpty();
+	req.checkBody('about', 'about field is required').trim().notEmpty();
+	req.checkBody('linkedInAcc', 'linkedIn Account field is required').trim().notEmpty();
+
+	let errors = req.validationErrors();
+
+	if ( errors ) {
+		return res.status(400).send({ errors });
+	}
+
+	const newEmployee = new Employee({ name, position, about, linkedInAcc });
+
+	newEmployee.save().then((employee) => {
+		res.status(200).send({ success: true, employee });
+		console.log(employee);
+	});
+})
 
 app.listen(port, () => {
 	console.log('Server is runung on port ' + port);
