@@ -6,7 +6,7 @@ const upload			= multer({dist: './uploads'});
 const mongo 			= require('mongodb');
 const mongoose 			= require('mongoose');
 
-const {Employee} 		= require('./models/employee');
+const { Employee } 		= require('./models/employee');
 
 const dbUrl = 'mongodb://ahmed_soliman:123456@ds113358.mlab.com:13358/employees'
 mongoose.connect( dbUrl , (err) => {
