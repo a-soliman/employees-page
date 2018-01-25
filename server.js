@@ -4,6 +4,7 @@ const expressValidator	= require('express-validator');
 const multer			= require('multer');
 const upload			= multer({dist: './uploads'});
 const mongo 			= require('mongodb');
+const { ObjectID } 		= require('mongodb');
 const mongoose 			= require('mongoose');
 
 const { Employee } 		= require('./models/employee');
@@ -83,7 +84,7 @@ app.get('/employee/:id', ( req, res ) => {
 		)
 		.catch(
 			( err ) => {
-				res.status(500).send({ success: false, msg: 'An Error has occured.' })
+				res.status(500).send({ success: false, msg: 'An Error has occured.' });
 			}
 		)
 });
@@ -112,7 +113,35 @@ app.post('/employee/add', ( req, res ) => {
 		res.status(200).send({ success: true, employee });
 		console.log(employee);
 	});
-})
+});
+
+app.delete('/employee/:id', ( req, res ) => {
+	let _id = req.params.id;
+
+	if ( !ObjectID.isValid(_id) ) {
+		return res.status(404).send({ success: false, msg: 'Invalid ID.'});
+	}
+
+	Employee.findOneAndRemove({_id})
+		.then(
+			( employee ) => {
+				if ( !employee ) {
+					return res.status(404).send({ success: false, msg: 'Unable to find employee with the provided ID.'});
+				}
+
+				res.status(200).send({ success: true, employee });
+			},
+			( err ) => {
+				res.status(404).send({ success: false, msg: 'Unable to find employee with the provided ID.'});
+			}
+		)
+		.catch(
+			( err ) => {
+				res.status(500).send({ success: false, msg: 'An Error has occured.' });
+			}
+		)
+
+});
 
 app.listen(port, () => {
 	console.log('Server is runung on port ' + port);
