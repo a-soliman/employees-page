@@ -8,6 +8,21 @@ const mongoose 			= require('mongoose');
 
 const {Employee} 		= require('./models/employee');
 
+const dbUrl = 'mongodb://ahmed_soliman:123456@ds113358.mlab.com:13358/employees'
+mongoose.connect( dbUrl , (err) => {
+	if(err) {
+		return console.log('Unable to connect to DB', err)
+	}
+
+	console.log('Connected Successfully fo DB.')
+});
+
+const db 	= mongoose.connection;
+const app 	= express();
+const port 	= process.env.PORT || 3000;
+
+
+
 
 
 app.listen(port, () => {
