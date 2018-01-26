@@ -20,7 +20,7 @@ export class AdminComponent implements OnInit {
 	private successMessage          : string;
 
 
-  	constructor(public auth: AuthService, 
+  	constructor(public auth: AuthService,
   				private fb: FormBuilder,
   				private employeesService: EmployeesService,
            		private element: ElementRef ) {
@@ -48,27 +48,27 @@ export class AdminComponent implements OnInit {
       	let file = files[0];
 
       	console.log('FILE: ', file);
-  
-      	let formData = new FormData();
+
+      	let formData = new FormData(employee);
 
       	formData.append('profileImage', file, file.name)
-      	
-      	// Object.keys(employee).forEach((item) => {
-       //  	formData.append(item, employee[item]);
-      	// });
-      	console.log(formData)
 
-     //  	this.employeesService.addEmployee(formData)
-     //  		.subscribe( ( res:any ) => {
-     //  			console.log('RES: ', res);
+      	Object.keys(employee).forEach((item) => {
+        	formData.append(item, employee[item]);
+      	});
+      	// console.log(formData.get('profileImage'))
 
-     //  			if ( res.success === true) {
-					// this.successMessage = res.msg;
-					// this.serverValidationErrors = [];
-					// this.addEmployeeForm.reset();
-					// this.toggleAddEmployeeForm();
-				 //  }
-     //  		})
+      	this.employeesService.addEmployee(formData)
+      		.subscribe( ( res:any ) => {
+      			console.log('RES: ', res);
+
+      			if ( res.success === true) {
+					this.successMessage = res.msg;
+					this.serverValidationErrors = [];
+					this.addEmployeeForm.reset();
+					this.toggleAddEmployeeForm();
+				  }
+      		})
   	}
 
 }

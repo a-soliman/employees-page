@@ -14,12 +14,12 @@ export class EmployeesService {
   	}
 
     addEmployee( employee ) {
-
+      console.log('Service recived: ', employee);
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
       //headers.append('Content-Type', 'image/jpeg');
 
-      return this.http.post("http://localhost:3000/employee/add", employee, {headers})
+      return this.http.post("http://localhost:3000/employee/add", employee)
         .map( res => res.json() );
     }
 
@@ -32,7 +32,7 @@ export class EmployeesService {
   	}
 
   	updateEmployee( employee ) {
-  		
+
   	}
 
 }
