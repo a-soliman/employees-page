@@ -23,14 +23,15 @@ const port 	= process.env.PORT || 3000;
 
 
 
-// parse application/x-www-form-urlencoded 
+// parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
- 
-// parse application/json 
+
+// parse application/json
 app.use(bodyParser.json())
 
-
-//cross Origin 
+// Serving static files
+app.use(express.static('uploads'));
+//cross Origin
 app.use(function (req, res, next) {
 	res.setHeader('Access-Control-Allow-Origin', '*');
 	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH');
@@ -64,7 +65,7 @@ app.get('/employee', ( req, res ) => {
 		.then(
 			(employees) => {
 				res.status(200).send({ success: true, employees });
-			}, 
+			},
 			( err ) => {
 				res.status(400).send({ success: false, msg: 'Unable to fetch employees'});
 			}
@@ -87,7 +88,7 @@ app.get('/employee/:id', ( req, res ) => {
 
 				res.status(200).send({ success: true, employee });
 
-			}, 
+			},
 			( err ) => {
 				res.status(400).send({ success: false, msg: 'Unable to fetch employee'});
 			}
