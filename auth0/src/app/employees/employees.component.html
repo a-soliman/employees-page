@@ -1,6 +1,13 @@
 <div *ngIf="employees">
 	<div *ngFor="let employee of employees">
-		<h4>{{ employee.name }}</h4>
-		<h5>{{ employee.position }}</h5>
+
+		<div class="col-md-3">
+			<div class="card">
+				<img class="profile-image" src="http://localhost:3000/{{employee.profileImage}}">
+				<h4>{{ employee.name }}</h4>
+				<h5>{{ employee.position }}</h5>
+			</div>
+		</div>
+
 	</div>
 </div>
