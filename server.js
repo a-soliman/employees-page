@@ -1,8 +1,7 @@
 const express			= require('express');
 const bodyParser		= require('body-parser');
 const expressValidator	= require('express-validator');
-const multer			= require('multer');
-const upload			= multer({dist: './uploads'});
+
 const mongo 			= require('mongodb');
 const { ObjectID } 		= require('mongodb');
 const mongoose 			= require('mongoose');
@@ -29,6 +28,17 @@ app.use(bodyParser.urlencoded({ extended: false }))
  
 // parse application/json 
 app.use(bodyParser.json())
+
+
+//cross Origin 
+app.use(function (req, res, next) {
+	res.setHeader('Access-Control-Allow-Origin', '*');
+	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH');
+	res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+	res.setHeader('Access-Control-Allow-Credentials', true);
+	res.setHeader('Access-Control-Allow-Headers', '*');
+	next();
+});
 
 // Validator
 app.use(expressValidator({
@@ -89,11 +99,16 @@ app.get('/employee/:id', ( req, res ) => {
 		)
 });
 
-app.post('/employee/add', ( req, res ) => {
-	let name 		= req.body.name.trim();
-	let position 	= req.body.position.trim();
-	let about		= req.body.about.trim();
-	let linkedInAcc	= req.body.linkedInAcc.trim();
+var multer  = require('multer')
+var upload = multer({ dest: 'uploads/' })
+app.post('/employee/add', upload.single('profileImage'), ( req, res, next ) => {
+	console.log(req)
+
+	let name 			= req.body.name.trim();
+	let position 		= req.body.position.trim();
+	let about			= req.body.about.trim();
+	let linkedInAcc		= req.body.linkedInAcc.trim();
+	let profileImage 	= req.file ? req.file.filename : 'noImage.jpg';
 
 	// validation
 	req.checkBody('name', 'name field is required.').trim().notEmpty();
@@ -107,7 +122,7 @@ app.post('/employee/add', ( req, res ) => {
 		return res.status(400).send({ errors });
 	}
 
-	const newEmployee = new Employee({ name, position, about, linkedInAcc });
+	const newEmployee = new Employee({ name, position, about, linkedInAcc, profileImage });
 
 	newEmployee.save().then((employee) => {
 		res.status(200).send({ success: true, msg: 'Added new Employee.' ,employee });

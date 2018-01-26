@@ -14,6 +14,9 @@ const Employee = mongoose.model('Employee', {
 	},
 	linkedInAcc: {
 		type:String
+	},
+	profileImage: {
+		type: String
 	}
 });
 
