@@ -1,0 +1,87 @@
+<h2>Admin page</h2>
+
+<h4 *ngIf="auth.isAuthenticated()">
+  You are logged in!
+</h4>
+<h4 *ngIf="!auth.isAuthenticated()">
+  You are not logged in! Please <a (click)="auth.login()">Log In</a> to continue.
+</h4>
+<div style="margin-bottom: 20px;">
+	<button 
+        id="qsLogoutBtn"
+        class="btn btn-primary btn-margin"
+        *ngIf="auth.isAuthenticated()"
+        (click)="auth.logout()">
+          Log Out
+	</button>
+</div>
+
+<!-- MESSAGES -->
+<div class="success-message" *ngIf="successMessage">
+	<div class="alert alert-success">{{successMessage}}</div>
+</div>
+
+<div class="errors" *ngIf="serverValidationErrors">
+	<div *ngFor="let error of serverValidationErrors">
+		<div class="alert alert-danger">{{error.msg}}</div>
+	</div>
+</div>
+
+<!-- Add Employee Form -->
+<div *ngIf="auth.isAuthenticated()">
+	<div class="panel panel-default">
+	  <div class="panel-heading clickable" >
+	    <h3 class="panel-title" (click)="toggleAddEmployeeForm()">Add Employee <i class="glyphicon" [class.glyphicon-chevron-down]="!displayAddEmployeeForm"
+	    	[class.glyphicon-chevron-up]="displayAddEmployeeForm"></i></h3>
+	    
+	  </div>
+	  <div class="panel-body" *ngIf="displayAddEmployeeForm">
+
+	    <form [formGroup]="addEmployeeForm" (ngSubmit)="addEmployee(addEmployeeForm.value)" enctype="multipart/form-data">
+
+			<div class="form-group">
+				<label for="">Name</label>
+				<input formControlName="name" type="text" class="form-control">
+
+				<div class="alert alert-danger" *ngIf="!addEmployeeForm.controls['name'].valid && addEmployeeForm.controls['name'].touched">
+					Name is required..
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="">Occupation</label>
+				<input formControlName="position" type="text" class="form-control">
+				<div class="alert alert-danger" *ngIf="!addEmployeeForm.controls['position'].valid && addEmployeeForm.controls['position'].touched">
+					Occupation is required..
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="">LinkedIn</label>
+				<input formControlName="linkedInAcc" type="text" class="form-control">
+			</div>
+
+			<div class="form-group">
+				<label for="">About</label>
+				<textarea class="form-control" formControlName="about" name="about" id="about" cols="30" rows="3"></textarea>
+
+				<div class="alert alert-danger" *ngIf="!addEmployeeForm.controls['about'].valid && addEmployeeForm.controls['about'].touched">
+					About is required..
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="">Profile Image</label>
+				<input class="form-control" name="profileImage"  type="file" id="profileImage">
+			</div>
+
+			<input 
+				type="submit" 
+				class="btn btn-primary" 
+				value="Add Employee"
+				[disabled]="!addEmployeeForm.valid"
+				>
+		</form>
+	  </div>
+	</div>
+</div>
