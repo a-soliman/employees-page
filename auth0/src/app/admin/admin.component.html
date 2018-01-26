@@ -7,7 +7,7 @@
   You are not logged in! Please <a (click)="auth.login()">Log In</a> to continue.
 </h4>
 <div style="margin-bottom: 20px;">
-	<button 
+	<button
         id="qsLogoutBtn"
         class="btn btn-primary btn-margin"
         *ngIf="auth.isAuthenticated()"
@@ -31,9 +31,9 @@
 <div *ngIf="auth.isAuthenticated()">
 	<div class="panel panel-default">
 	  <div class="panel-heading clickable" >
-	    <h3 class="panel-title" (click)="toggleAddEmployeeForm()">Add Employee <i class="glyphicon" [class.glyphicon-chevron-down]="!displayAddEmployeeForm"
-	    	[class.glyphicon-chevron-up]="displayAddEmployeeForm"></i></h3>
-	    
+	    <div class="panel-title" (click)="toggleAddEmployeeForm()">Add Employee <span class="pull-right"><i class="glyphicon" [class.glyphicon-chevron-down]="!displayAddEmployeeForm"
+	    	[class.glyphicon-chevron-up]="displayAddEmployeeForm"></i></span></div>
+
 	  </div>
 	  <div class="panel-body" *ngIf="displayAddEmployeeForm">
 
@@ -75,9 +75,9 @@
 				<input class="form-control" name="profileImage"  type="file" id="profileImage">
 			</div>
 
-			<input 
-				type="submit" 
-				class="btn btn-primary" 
+			<input
+				type="submit"
+				class="btn btn-primary"
 				value="Add Employee"
 				[disabled]="!addEmployeeForm.valid"
 				>
