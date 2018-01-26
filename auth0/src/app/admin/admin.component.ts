@@ -51,7 +51,7 @@ export class AdminComponent implements OnInit {
 
       	let formData = new FormData(employee);
 
-      	formData.append('profileImage', file, file.name)
+      	formData.append('profileImage', file, file.name);
 
       	Object.keys(employee).forEach((item) => {
         	formData.append(item, employee[item]);
