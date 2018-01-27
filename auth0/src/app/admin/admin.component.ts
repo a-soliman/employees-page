@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { AuthService } from '../auth/auth.service';
@@ -15,15 +15,16 @@ import { Employee } from '../employee';
 export class AdminComponent implements OnInit {
 	private displayAddEmployeeForm	: boolean = false;
 	private addEmployeeForm       	: FormGroup;
-	private employees			  	: Array<Employee>;
+	private employees			  	      : Array<Employee>;
 	private serverValidationErrors  : Array<any> = [];
 	private successMessage          : string;
+  private errorMessage            : string;
 
 
   	constructor(public auth: AuthService,
   				private fb: FormBuilder,
   				private employeesService: EmployeesService,
-           		private element: ElementRef ) {
+          private element: ElementRef ) {
 
   		this.addEmployeeForm = fb.group({
   			'name': [null, Validators.compose([ Validators.required, Validators.minLength(3) ])],
@@ -35,7 +36,18 @@ export class AdminComponent implements OnInit {
   	}
 
   	ngOnInit() {
+      if ( this.auth.isAuthenticated() ) {
+        this.getEmployees();
+        console.log('yes');
+      }
+      else {
+        console.log('No')
+      }
   	}
+
+    ngAfterViewInit() {
+      
+    }
 
   	toggleAddEmployeeForm() {
   		this.displayAddEmployeeForm = !this.displayAddEmployeeForm;
@@ -70,5 +82,30 @@ export class AdminComponent implements OnInit {
 				  }
       		})
   	}
+
+    getEmployees (): any {
+      this.employeesService.getEmployees()
+        .subscribe( ( res ) => {
+          if( res.success === true ) {
+            this.employees = res.employees;
+          }
+          else if ( res.errors ) {
+            res.errors.forEach((err) => {
+              this.serverValidationErrors.push(err);
+            })
+          }
+          else {
+            this.errorMessage = res.msg;
+          }
+        })
+    }
+
+    editEmployee ( id ) {
+      console.log(id)
+    }
+
+    deleteEmployee ( id ) {
+      console.log(id)
+    }
 
 }

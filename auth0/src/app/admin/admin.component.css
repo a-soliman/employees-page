@@ -1,3 +1,6 @@
 .clickable {
 	cursor: pointer;
 }
+.thumbnail {
+	width: 150px;
+}
