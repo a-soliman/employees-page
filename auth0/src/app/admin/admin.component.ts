@@ -70,11 +70,11 @@ export class AdminComponent implements OnInit {
       			console.log('RES: ', res);
 
       			if ( res.success === true) {
-					this.successMessage = res.msg;
-					this.serverValidationErrors = [];
-					this.addEmployeeForm.reset();
-					this.toggleAddEmployeeForm();
-				  }
+    					this.successMessage = res.msg;
+    					this.serverValidationErrors = [];
+    					this.addEmployeeForm.reset();
+    					this.toggleAddEmployeeForm();
+    				}
       		})
   	}
 
