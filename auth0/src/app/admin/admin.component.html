@@ -102,10 +102,14 @@
 			<td>{{ employee.about }}</td>
 			<td> <img class="thumbnail" src="http://www.localhost:3000/{{employee.profileImage}}"></td>
 			<td>
-				<button class="btn btn-warning btn-xsmall" (click)="editEmployee(employee._id)">E</button>
+				<button class="btn btn-warning btn-xsmall" (click)="editEmployee(employee._id)">
+					<i class="glyphicon glyphicon-edit"></i>
+				</button>
 			</td>
 			<td>
-				<button class="btn btn-danger btn-xsmall" (click)="deleteEmployee(employee._id)">D</button>
+				<button class="btn btn-danger btn-xsmall" (click)="deleteEmployee(employee._id)">
+					<i class="glyphicon glyphicon-remove"></i>
+				</button>
 			</td>
 		</tr>
 	</table>

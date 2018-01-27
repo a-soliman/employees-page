@@ -24,7 +24,6 @@ export class EmployeesComponent implements OnInit {
 	getEmployees() {
 	  	this.employeesService.getEmployees()
 	  		.subscribe( ( res ) => {
-	  			console.log(res);
 
 	  			if( res.success === true ) {
 	  				this.employees = res.employees;

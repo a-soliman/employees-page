@@ -105,7 +105,7 @@ export class AdminComponent implements OnInit {
     }
 
     deleteEmployee ( id ) {
-      console.log(id)
+      console.log(id);
     }
 
 }
