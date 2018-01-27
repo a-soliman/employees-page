@@ -159,17 +159,18 @@ app.delete('/employee/:id', ( req, res ) => {
 
 });
 
-app.patch('/employee/:id', ( req, res ) => {
+app.patch('/employee/:id', upload.single('profileImage'), ( req, res, next ) => {
 	let _id = req.params.id;
 
 	if ( !ObjectID.isValid(_id) ) {
 		return res.status(404).send({ success: false, msg: 'Invalid ID.'});
 	}
 
-	let name 		= req.body.name;
-	let position 	= req.body.position;
-	let about 		= req.body.about;
-	let linkedInAcc = req.body.linkedInAcc;
+	let name 		 	= req.body.name;
+	let position 	 	= req.body.position;
+	let about 		 	= req.body.about;
+	let linkedInAcc  	= req.body.linkedInAcc;
+	let profileImage 	= req.file ? req.file.filename : 'noImage.jpg';
 
 
 	req.checkBody('name', 'name field is required.').trim().notEmpty();
@@ -195,6 +196,9 @@ app.patch('/employee/:id', ( req, res ) => {
 				employee.about 		= about;
 				employee.linkedInAcc = req.body.linkedInAcc;
 				/* figure the updated image here */
+				if(employee.profileImage !== profileImage && profileImage !== 'noImage.jpg') {
+					employee.profileImage = profileImage;
+				}
 
 				employee.save(( err, updatedEmployee ) => {
 					if ( err ) {
