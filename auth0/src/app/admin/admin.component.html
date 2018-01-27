@@ -87,31 +87,38 @@
 </div>
 
 <div *ngIf="auth.isAuthenticated()">
-	<table class="table table-striped">
-		<tr>
-			<th>Name</th>
-			<th>Position</th>
-			<th>About</th>
-			<th>Image</th>
-			<th>Edit</th>
-			<th>Delete</th>
-		</tr>
-		<tr *ngFor="let employee of employees">
-			<td>{{ employee.name }}</td>
-			<td>{{ employee.position }}</td>
-			<td>{{ employee.about }}</td>
-			<td> <img class="thumbnail" src="http://www.localhost:3000/{{employee.profileImage}}"></td>
-			<td>
-				<button class="btn btn-warning btn-xsmall" (click)="editEmployee(employee._id)">
-					<i class="glyphicon glyphicon-edit"></i>
-				</button>
-			</td>
-			<td>
-				<button class="btn btn-danger btn-xsmall" (click)="deleteEmployee(employee._id)">
-					<i class="glyphicon glyphicon-remove"></i>
-				</button>
-			</td>
-		</tr>
+	<table class="table table-striped table-bordered">
+		 <thead>
+			<tr>
+				<th>#</th>
+				<th>Name</th>
+				<th>Position</th>
+				<th>About</th>
+				<th>Image</th>
+				<th>Edit</th>
+				<th>Delete</th>
+			</tr>
+		</thead>
+
+		<tbody class="table-stripped table-hover">
+			<tr *ngFor="let employee of employees index as i">
+				<td>{{i+1}}</td>
+				<td>{{ employee.name }}</td>
+				<td>{{ employee.position }}</td>
+				<td>{{ employee.about }}</td>
+				<td> <img class="thumbnail" src="http://www.localhost:3000/{{employee.profileImage}}"></td>
+				<td>
+					<button class="btn btn-warning btn-xsmall" (click)="editEmployee(employee._id)">
+						<i class="glyphicon glyphicon-edit"></i>
+					</button>
+				</td>
+				<td>
+					<button class="btn btn-danger btn-xsmall" (click)="deleteEmployee(employee._id)">
+						<i class="glyphicon glyphicon-remove"></i>
+					</button>
+				</td>
+			</tr>
+		</tbody>
 	</table>
 
 </div>
