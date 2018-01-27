@@ -106,6 +106,25 @@ export class AdminComponent implements OnInit {
 
     deleteEmployee ( id ) {
       console.log(id);
+      if ( confirm('Are you sure?') ) {
+        this.employeesService.removeEmployee(id)
+          .subscribe( (res) => {
+            if ( res.success === true ) {
+              this.successMessage = `${res.msg} : ${res.employee.name}`;
+              
+              for ( let i = 0; i < this.employees.length; i++ ) {
+                let employee = this.employees[i];
+                if(employee._id == id) {
+                  this.employees.splice(i, 1);
+                  return;
+                }
+              }
+            }
+            else {
+              this.serverValidationErrors = [res.msg];
+            }
+          })
+      }
     }
 
 }
