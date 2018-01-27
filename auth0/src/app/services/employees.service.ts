@@ -24,7 +24,8 @@ export class EmployeesService {
     }
 
   	getEmployeeById( id ) {
-
+      return this.http.get(`http://localhost:3000/employee/${id}`)
+        .map( res => res.json() );
   	}
 
   	removeEmployee( id ) {
