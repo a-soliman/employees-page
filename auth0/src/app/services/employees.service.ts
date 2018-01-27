@@ -28,7 +28,8 @@ export class EmployeesService {
   	}
 
   	removeEmployee( id ) {
-
+      return this.http.delete(`http://localhost:3000/employee/${id}`)
+        .map( res => res.json());
   	}
 
   	updateEmployee( employee ) {
