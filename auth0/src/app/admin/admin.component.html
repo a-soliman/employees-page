@@ -85,3 +85,29 @@
 	  </div>
 	</div>
 </div>
+
+<div *ngIf="auth.isAuthenticated()">
+	<table class="table table-striped">
+		<tr>
+			<th>Name</th>
+			<th>Position</th>
+			<th>About</th>
+			<th>Image</th>
+			<th>Edit</th>
+			<th>Delete</th>
+		</tr>
+		<tr *ngFor="let employee of employees">
+			<td>{{ employee.name }}</td>
+			<td>{{ employee.position }}</td>
+			<td>{{ employee.about }}</td>
+			<td> <img class="thumbnail" src="http://www.localhost:3000/{{employee.profileImage}}"></td>
+			<td>
+				<button class="btn btn-warning btn-xsmall" (click)="editEmployee(employee._id)">E</button>
+			</td>
+			<td>
+				<button class="btn btn-danger btn-xsmall" (click)="deleteEmployee(employee._id)">D</button>
+			</td>
+		</tr>
+	</table>
+
+</div>
