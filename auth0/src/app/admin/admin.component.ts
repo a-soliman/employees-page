@@ -49,8 +49,6 @@ export class AdminComponent implements OnInit {
   	}
 
   	addEmployee( employee ) {
-  		console.log(employee);
-  		//image handeling
       	let files = this.element.nativeElement.querySelector('#profileImage').files;
       	let file = files[0];
 
@@ -67,13 +65,13 @@ export class AdminComponent implements OnInit {
 
       	this.employeesService.addEmployee(formData)
       		.subscribe( ( res:any ) => {
-      			console.log('RES: ', res);
 
       			if ( res.success === true) {
     					this.successMessage = res.msg;
     					this.serverValidationErrors = [];
     					this.addEmployeeForm.reset();
     					this.toggleAddEmployeeForm();
+              this.getEmployees();
     				}
       		})
   	}
