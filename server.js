@@ -103,7 +103,6 @@ app.get('/employee/:id', ( req, res ) => {
 var multer  = require('multer')
 var upload = multer({ dest: 'uploads/' })
 app.post('/employee/add', upload.single('profileImage'), ( req, res, next ) => {
-	console.log(req)
 
 	let name 			= req.body.name.trim();
 	let position 		= req.body.position.trim();
