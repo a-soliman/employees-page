@@ -36,13 +36,8 @@ export class AdminComponent implements OnInit {
   	}
 
   	ngOnInit() {
-      if ( this.auth.isAuthenticated() ) {
-        this.getEmployees();
-        console.log('yes');
-      }
-      else {
-        console.log('No')
-      }
+      this.getEmployees();
+      
   	}
 
     ngAfterViewInit() {
