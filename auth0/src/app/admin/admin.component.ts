@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit, ElementRef } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
 
 import { AuthService } from '../auth/auth.service';
 import { EmployeesService } from '../services/employees.service';
@@ -160,5 +160,10 @@ export class AdminComponent implements OnInit {
           })
       }
     }
+
+     onSubmit(editForm: NgForm) {
+    console.log(editForm.value);  // { first: '', last: '' }
+    console.log(editForm.valid);  // false
+  }
 
 }

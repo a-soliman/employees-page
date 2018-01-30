@@ -123,6 +123,12 @@
 
 
 <div *ngIf="employeeToEdit">
+
+	<!-- <form #editForm="ngForm" (ngSubmit)="onSubmit(editForm)" novalidate>
+      <input name="name" value="name" ngModel required #name="ngModel" placehoder="place---holder">
+      <input name="position" ngModel required #position="ngModel" value="{{employeeToEdit.position}}">
+      <button>Submit</button>
+    </form> -->
 	
 <form [formGroup]="editEmployeeForm" (ngSubmit)="editEmployee(editEmployeeForm.value)" enctype="multipart/form-data">
 
