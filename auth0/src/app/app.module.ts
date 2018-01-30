@@ -13,6 +13,7 @@ import { AuthService } from './auth/auth.service';
 import { CallbackComponent } from './callback/callback.component';
 import { AdminComponent } from './admin/admin.component';
 import { EmployeesComponent } from './employees/employees.component';
+import { EmployeeComponent } from './employee/employee.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { EmployeesComponent } from './employees/employees.component';
     HomeComponent,
     CallbackComponent,
     AdminComponent,
-    EmployeesComponent
+    EmployeesComponent,
+    EmployeeComponent
   ],
   imports: [
     BrowserModule,

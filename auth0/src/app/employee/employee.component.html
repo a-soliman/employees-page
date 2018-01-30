@@ -1,0 +1,18 @@
+
+
+<div *ngIf="employee">
+	<div class="row">
+	  <div class="col-sm-6 col-md-4">
+	    <div class="thumbnail">
+	      <img src="http://localhost:3000/{{employee.profileImage}}" alt="...">
+	      <div class="caption">
+	        <h3>{{ employee.name }}</h3>
+	        <p>{{ employee.about }}</p>
+	        <p>
+	        	<a href="{{employee.linkedInAcc}}" target="_blank"class="btn btn-primary" role="button">LI</a> 
+	        	<a routerLink="/"  class="btn btn-default" role="button">Back</a></p>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+</div>

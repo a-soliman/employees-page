@@ -108,7 +108,7 @@
 				<td>{{ employee.about }}</td>
 				<td> <img class="thumbnail" src="http://www.localhost:3000/{{employee.profileImage}}"></td>
 				<td>
-					<button class="btn btn-warning btn-xsmall" (click)="editEmployee(employee._id)">
+					<button class="btn btn-warning btn-xsmall" (click)="displayEditEmployeeForm(employee._id)">
 						<i class="glyphicon glyphicon-edit"></i>
 					</button>
 				</td>
@@ -120,5 +120,60 @@
 			</tr>
 		</tbody>
 	</table>
+
+
+<div *ngIf="employeeToEdit">
+	
+<form [formGroup]="editEmployeeForm" (ngSubmit)="editEmployee(editEmployeeForm.value)" enctype="multipart/form-data">
+
+	<div class="form-group">
+		<label for="">Name</label>
+		<input  type="text" class="form-control" value="{{employeeToEdit.name}}">
+
+		<div class="alert alert-danger" *ngIf="!editEmployeeForm.controls['name'].valid && editEmployeeForm.controls['name'].touched">
+			Name is required..
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label for="">Occupation</label>
+		<input  type="text" class="form-control" value="{{employeeToEdit.position}}">
+		<div class="alert alert-danger" *ngIf="!editEmployeeForm.controls['position'].valid && editEmployeeForm.controls['position'].touched">
+			Occupation is required..
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label for="">LinkedIn</label>
+		<input type="text" class="form-control" value="{{employeeToEdit.linkedInAcc}}">
+	</div>
+
+	<div class="form-group">
+		<label for="">About</label>
+		<textarea class="form-control" formControlName="about" name="about" id="editAbout" cols="30" rows="3" value="{{employeeToEdit.about}}">
+			
+		</textarea>
+
+		<div class="alert alert-danger" *ngIf="!editEmployeeForm.controls['about'].valid && editEmployeeForm.controls['about'].touched">
+			About is required..
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label for="">Profile Image</label>
+		<input class="form-control" name="profileImage"  type="file" id="editProfileImage">
+	</div>
+
+	<input
+		type="submit"
+		class="btn btn-primary"
+		value="Add Employee"
+		>
+</form>
+</div>
+
+
+	
+
 
 </div>

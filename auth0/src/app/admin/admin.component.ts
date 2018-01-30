@@ -15,10 +15,12 @@ import { Employee } from '../employee';
 export class AdminComponent implements OnInit {
 	private displayAddEmployeeForm	: boolean = false;
 	private addEmployeeForm       	: FormGroup;
+  private editEmployeeForm        : FormGroup;
 	private employees			  	      : Array<Employee>;
 	private serverValidationErrors  : Array<any> = [];
 	private successMessage          : string;
   private errorMessage            : string;
+  private employeeToEdit          : Employee;
 
 
   	constructor(public auth: AuthService,
@@ -32,6 +34,17 @@ export class AdminComponent implements OnInit {
   			'about': [ null, Validators.compose([ Validators.required, Validators.minLength(2) ])],
   			'linkedInAcc': [ null ]
   		});
+      //   let name         = this.employeeToEdit ? this.employeeToEdit.name : null; 
+      //   let position     = this.employeeToEdit ? this.employeeToEdit.position : null;
+      //   let about        = this.employeeToEdit ? this.employeeToEdit.about : null;
+      //   let linkedInAcc  = this.employeeToEdit ? this.employeeToEdit.linkedInAcc : null;
+
+        this.editEmployeeForm = fb.group({
+          'name': [ null, Validators.compose([ Validators.required, Validators.minLength(3) ])],
+          'position': [ null, Validators.compose([  Validators.minLength(3) ])],
+          'about': [ null, Validators.compose([  Validators.minLength(2) ])],
+          'linkedInAcc': [ null ]
+      });
 
   	}
 
@@ -93,8 +106,32 @@ export class AdminComponent implements OnInit {
         })
     }
 
-    editEmployee ( id ) {
-      console.log(id)
+    getEmployeeById ( id ) {
+      this.employeesService.getEmployeeById(id)
+         .subscribe( ( res ) => {
+           if ( res.success === true ) {
+             console.log(res);
+             this.employeeToEdit = res.employee[0];
+           }
+           else {
+             this.errorMessage = res.msg;
+           }
+         })
+    }
+
+    displayEditEmployeeForm ( employeeId ) {
+      console.log(employeeId )
+      this.getEmployeeById(employeeId );
+
+      let modal = document.getElementById('myModal');
+      console.log(modal)
+    }
+
+    editEmployee ( employee ) {
+      console.log(employee)
+
+      let form = document.querySelector('form');
+      console.log(form)
     }
 
     deleteEmployee ( id ) {
